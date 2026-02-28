@@ -1,57 +1,82 @@
 #include <Arduino.h>
+
 /**
  * @file main.cpp
- * @brief Embedded RGB LED Control (Digital + PWM)
- * @author YOUR_NAME
- * @date YYYY-MM-DD
+ * @brief Embedded RGB LED Control System (Digital + PWM)
+ * @author Vansh Saxena
+ * @date 2026-02-28
  *
  * @details
- * Controls RGB LED using digital ON/OFF
- * and analog PWM brightness control.
+ * This program controls an RGB LED using both digital
+ * ON/OFF control and PWM brightness modulation.
+ * It demonstrates individual color control and color mixing.
  */
 
- // TODO 1:
- // Define RED pin (Use 9)
+// Define RGB pins (PWM supported pins)
+#define RED_PIN 9
+#define GREEN_PIN 10
+#define BLUE_PIN 11
 
- // TODO 2:
- // Define GREEN pin (Use 10)
-
- // TODO 3:
- // Define BLUE pin (Use 11)
-
+/**
+ * @brief Initializes serial communication and RGB pins.
+ */
 void setup() {
 
-    // TODO 4:
-    // Initialize Serial communication (9600 baud)
+    Serial.begin(9600);
 
-    // TODO 5:
-    // Configure RGB pins as OUTPUT
+    pinMode(RED_PIN, OUTPUT);
+    pinMode(GREEN_PIN, OUTPUT);
+    pinMode(BLUE_PIN, OUTPUT);
 
-    // TODO 6:
-    // Print initialization message
+    Serial.println("RGB LED Control System Initialized");
 }
 
+/**
+ * @brief Continuously cycles through digital and PWM color modes.
+ */
 void loop() {
 
     // -------- DIGITAL MODE --------
+    Serial.println("Digital Red ON");
+    digitalWrite(RED_PIN, HIGH);
+    delay(1000);
 
-    // TODO 7:
-    // Turn ON red (digital HIGH)
+    digitalWrite(RED_PIN, LOW);
+    delay(500);
 
-    // TODO 8:
-    // Turn OFF red
+    // -------- PWM MODE --------
 
-    // -------- ANALOG (PWM) MODE --------
+    // Red
+    Serial.println("PWM Red");
+    analogWrite(RED_PIN, 255);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 0);
+    delay(1000);
 
-    // TODO 9:
-    // Set RED brightness using analogWrite()
+    // Green
+    Serial.println("PWM Green");
+    analogWrite(RED_PIN, 0);
+    analogWrite(GREEN_PIN, 255);
+    analogWrite(BLUE_PIN, 0);
+    delay(1000);
 
-    // TODO 10:
-    // Set GREEN brightness using analogWrite()
+    // Blue
+    Serial.println("PWM Blue");
+    analogWrite(RED_PIN, 0);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 255);
+    delay(1000);
 
-    // TODO 11:
-    // Set BLUE brightness using analogWrite()
+    // White (Mix)
+    Serial.println("PWM White (Mixed)");
+    analogWrite(RED_PIN, 255);
+    analogWrite(GREEN_PIN, 255);
+    analogWrite(BLUE_PIN, 255);
+    delay(1000);
 
-    // TODO 12:
-    // Add delay for visible transition
+    // Turn OFF all
+    analogWrite(RED_PIN, 0);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 0);
+    delay(1000);
 }
